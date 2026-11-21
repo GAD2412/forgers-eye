@@ -6,6 +6,8 @@ import { clockmakersBench } from './clockmakersBench.js';
 import { glasshouseJungle } from './glasshouseJungle.js';
 import { stargazersDome } from './stargazersDome.js';
 import { atticOfToys } from './atticOfToys.js';
+import { rooftopLaundry } from './rooftopLaundry.js';
+import { coralCathedral } from './coralCathedral.js';
 import { makeRng, shuffled } from '../util/rng.js';
 
 export const SETS = [
@@ -14,7 +16,11 @@ export const SETS = [
   { id: 3, numeral: 'III', name: 'Midnight Vault', difficulty: 'Hard', tagline: 'Shade, shape and a single star' },
 ];
 
-export const SCENES = [bakersWindow, koiPond, clockmakersBench, glasshouseJungle, stargazersDome, atticOfToys];
+export const SCENES = [
+  bakersWindow, koiPond,
+  clockmakersBench, glasshouseJungle, rooftopLaundry,
+  stargazersDome, atticOfToys, coralCathedral,
+];
 
 export function getScene(sceneId) {
   return SCENES.find((scene) => scene.id === sceneId) || SCENES[0];

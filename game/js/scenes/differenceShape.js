@@ -32,5 +32,7 @@ export function shapesOverlap(a, b) {
   const bb = shapeBounds(b);
   if (ab.right < bb.left || bb.right < ab.left || ab.bottom < bb.top || bb.bottom < ab.top) return false;
   if (!isRectShape(a) && !isRectShape(b)) return Math.hypot(a.x - b.x, a.y - b.y) < a.r + b.r;
-  return true;
+  if (isRectShape(a) && isRectShape(b)) return true;
+  const [box, disc] = isRectShape(a) ? [a, b] : [b, a];
+  return distanceOutside(box, disc.x, disc.y) < disc.r;
 }

@@ -19,7 +19,8 @@ export function drawScene(ctx, scene, activeIds) {
 // Size a canvas to its CSS box (times device pixel ratio) and paint the scene into it.
 export function paintPanel(canvas, scene, activeIds, maxRatio = 2) {
   const box = canvas.getBoundingClientRect();
-  const ratio = Math.min(window.devicePixelRatio || 1, maxRatio);
+  // At least 1.6x, so the loupe has real detail to magnify even on a 1x screen.
+  const ratio = Math.min(Math.max(window.devicePixelRatio || 1, 1.6), maxRatio);
   const width = Math.max(8, Math.round(box.width * ratio));
   const height = Math.max(6, Math.round((width * PICTURE_HEIGHT) / PICTURE_WIDTH));
   canvas.width = width;
