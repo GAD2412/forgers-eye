@@ -1,0 +1,133 @@
+/* The gallery wall: two gilded frames side by side, the status bar beneath. */
+#app {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  background:
+    radial-gradient(ellipse 46% 36% at 27% 0%, rgba(255, 224, 150, 0.2), transparent 72%),
+    radial-gradient(ellipse 46% 36% at 73% 0%, rgba(255, 224, 150, 0.2), transparent 72%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.022) 0 2px, transparent 2px 48px),
+    linear-gradient(var(--wall-top), var(--wall-bottom) 78%, var(--night));
+}
+
+#stage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(14px, 2.4vw, 34px);
+  min-height: 0;
+  padding: 0 18px;
+}
+
+.frame {
+  position: relative;
+  margin: 0;
+  padding: 11px;
+  border-radius: 7px;
+  background: linear-gradient(135deg, #f8dc8e, #b8812b 38%, #f3d27e 58%, #8a5b17);
+  box-shadow:
+    0 22px 42px rgba(0, 0, 0, 0.6),
+    0 3px 0 #5c3d0e,
+    inset 0 0 0 1.5px rgba(255, 255, 255, 0.35),
+    inset 0 0 0 5px rgba(90, 55, 10, 0.45);
+}
+.frame::before {
+  /* the picture light above each frame */
+  content: "";
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  top: -13px;
+  height: 7px;
+  border-radius: 4px;
+  background: linear-gradient(#e8d29a, #8f6a22);
+  box-shadow: 0 6px 18px 2px rgba(255, 226, 150, 0.45);
+}
+
+.mat {
+  padding: 9px;
+  background: #efe6d2;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3), inset 0 3px 9px rgba(0, 0, 0, 0.4);
+}
+
+.picture {
+  position: relative;
+  width: var(--panel-w, 540px);
+  aspect-ratio: 4 / 3;
+  background: #20152c;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+.picture canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.picture canvas.fx { cursor: crosshair; touch-action: none; }
+
+.plaque {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px auto 0;
+  width: max-content;
+  min-width: 52%;
+  padding: 5px 18px 6px;
+  border-radius: 4px;
+  background: linear-gradient(#e7c565, #b88a2c);
+  border: 1px solid #5c3d0e;
+  color: #2a1a05;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.plaque b { font-family: var(--serif); font-size: 17px; letter-spacing: 0.22em; }
+.plaque i { font-size: 12px; letter-spacing: 0.06em; opacity: 0.75; }
+
+.frame.shake { animation: frame-shake 360ms linear; }
+@keyframes frame-shake {
+  0%, 100% { transform: translateX(0); }
+  15% { transform: translateX(-7px) rotate(-0.4deg); }
+  35% { transform: translateX(6px) rotate(0.35deg); }
+  55% { transform: translateX(-4px); }
+  75% { transform: translateX(3px); }
+}
+
+#statusbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 10px 22px 12px;
+  background: linear-gradient(#24182f, #170f21);
+  border-top: 2px solid var(--brass-deep);
+}
+#toast {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--cream);
+  min-height: 1.4em;
+}
+#toast[data-tone="good"] { color: #8ff0b0; }
+#toast[data-tone="bad"] { color: var(--rose); }
+#toast[data-tone="hint"] { color: var(--amber); }
+#key-help { font-size: 13px; color: var(--ink-soft); white-space: nowrap; }
+
+#urgency-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: inset 0 0 140px 20px rgba(255, 60, 40, 0.55);
+  transition: opacity 400ms;
+}
+#app[data-band="urgent"][data-screen="playing"] #urgency-glow { opacity: 1; animation: urgency 900ms ease-in-out infinite alternate; }
+#app[data-band="warn"][data-screen="playing"] #urgency-glow { opacity: 0.45; box-shadow: inset 0 0 120px 10px rgba(255, 170, 40, 0.4); }
+@keyframes urgency { from { opacity: 0.45; } to { opacity: 1; } }
+
+@media (max-width: 900px) {
+  #key-help { display: none; }
+  #stage { flex-direction: column; }
+}

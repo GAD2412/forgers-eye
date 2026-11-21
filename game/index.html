@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Forger's Eye: a spot the difference game in a gallery of paired paintings. Find what the forger changed before the clock runs out.">
+<title>Forger's Eye</title>
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/hud.css">
+<link rel="stylesheet" href="css/screens.css">
+</head>
+<body>
+<div id="app" data-screen="menu" data-band="calm">
+  <header id="hud" aria-label="Round status">
+    <div id="scene-heading">
+      <span id="set-badge">SET I</span>
+      <h1 id="scene-title">Forger's Eye</h1>
+      <p id="scene-meta">Easy</p>
+    </div>
+    <div id="remaining-counter" role="status" aria-live="polite" aria-atomic="true">
+      <div id="remaining-line"><span id="remaining-number">7</span><span id="remaining-word">LEFT</span></div>
+      <ol id="found-pips" aria-hidden="true"></ol>
+    </div>
+    <div id="hud-tools">
+      <p id="score-readout"><span id="score-label">SCORE</span> <span id="score-value">0</span> <small id="combo-badge" hidden>x2</small></p>
+      <ul id="hearts" aria-label="Slips left"><li></li><li></li><li></li></ul>
+      <button id="hint-button" class="tool" type="button" aria-keyshortcuts="H"><span class="tool-cap">H</span><span class="tool-name">Hint</span><span id="hint-uses" class="tool-count">3</span></button>
+      <button id="loupe-button" class="tool" type="button" aria-pressed="false" aria-keyshortcuts="Z"><span class="tool-cap">Z</span><span class="tool-name">Loupe</span></button>
+      <button id="pause-button" class="tool" type="button" aria-keyshortcuts="P"><span class="tool-cap">P</span><span class="tool-name">Pause</span></button>
+      <button id="mute-button" class="tool" type="button" aria-pressed="false" aria-keyshortcuts="M"><span class="tool-cap">M</span><span class="tool-name">Sound</span></button>
+    </div>
+  </header>
+
+  <div id="timer-rail" role="progressbar" aria-label="Time left" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
+    <span id="timer-label">TIME</span>
+    <div id="timer-track"><div id="timer-fill"></div></div>
+    <span id="timer-text">2:30</span>
+    <span id="penalty-flash" aria-hidden="true"></span>
+  </div>
+
+  <main id="stage">
+    <figure id="panel-original" class="frame">
+      <div class="mat"><div class="picture"><canvas id="scene-original" aria-label="The original painting"></canvas><canvas id="fx-original" class="fx"></canvas></div></div>
+      <figcaption class="plaque"><b>THE ORIGINAL</b><i>hung by the curator</i></figcaption>
+    </figure>
+    <figure id="panel-copy" class="frame">
+      <div class="mat"><div class="picture"><canvas id="scene-copy" aria-label="The forged copy, with the differences to find"></canvas><canvas id="fx-copy" class="fx"></canvas></div></div>
+      <figcaption class="plaque"><b>THE COPY</b><i>something here has been altered</i></figcaption>
+    </figure>
+  </main>
+
+  <footer id="statusbar">
+    <p id="toast" role="status" aria-live="polite">Click a difference in either picture.</p>
+    <p id="key-help"><kbd>Arrows</kbd> move <kbd>Space</kbd> mark <kbd>H</kbd> hint <kbd>Z</kbd> loupe <kbd>P</kbd> pause <kbd>R</kbd> restart <kbd>Esc</kbd> menu</p>
+  </footer>
+
+  <div id="urgency-glow" aria-hidden="true"></div>
+
+  <section id="screen-menu" class="screen" aria-label="Main menu"></section>
+  <section id="screen-levels" class="screen" aria-label="Choose a pair" hidden></section>
+  <section id="screen-results" class="screen" aria-label="Round results" hidden></section>
+  <section id="screen-pause" class="screen" aria-label="Paused" hidden></section>
+  <section id="selftest-report" hidden></section>
+</div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
